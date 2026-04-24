@@ -222,20 +222,38 @@ pytest --no-cov
 ## Estrutura do Projeto
 
 ```
-vendas-cli/
-├── vendas_cli/
-│   ├── __init__.py     # versão do pacote
-│   ├── parser.py       # leitura e validação do CSV
-│   ├── core.py         # agregações e cálculos de negócio
-│   ├── output.py       # formatação text/JSON
-│   └── cli.py          # ponto de entrada CLI (argparse)
+desafio-csv/
+├── features/
+│   └── vendas_cli/
+│       ├── __init__.py          # versão do pacote
+│       ├── __main__.py          # permite python -m vendas_cli
+│       ├── cli/
+│       │   ├── __init__.py      # expõe: main, entrypoint
+│       │   ├── __main__.py      # permite python -m vendas_cli.cli
+│       │   └── cli.py           # argparse + orquestração do pipeline
+│       ├── parser/
+│       │   ├── __init__.py      # expõe: SaleRecord, read_csv
+│       │   ├── models.py        # dataclass SaleRecord
+│       │   ├── validators.py    # parse_date, build_record
+│       │   └── reader.py        # detecção de encoding, iteração CSV
+│       ├── core/
+│       │   ├── __init__.py      # expõe: ProductSummary, SalesReport, build_report
+│       │   ├── models.py        # dataclasses ProductSummary, SalesReport
+│       │   └── aggregator.py    # lógica de agregação e cálculos
+│       └── output/
+│           ├── __init__.py      # expõe: OutputFormat, render
+│           ├── output.py        # fachada que delega para text/json
+│           ├── text.py          # renderização como tabela ASCII
+│           └── json_renderer.py # renderização como JSON estruturado
 ├── tests/
-│   ├── conftest.py     # fixtures compartilhadas
-│   ├── test_parser.py  # testes do módulo parser
-│   ├── test_core.py    # testes do módulo core
-│   ├── test_output.py  # testes do módulo output
-│   └── test_cli.py     # testes de integração da CLI
-├── pyproject.toml          # configuração do pacote e pytest
+│   ├── conftest.py              # fixtures compartilhadas
+│   ├── test_parser.py           # testes do subpacote parser
+│   ├── test_core.py             # testes do subpacote core
+│   ├── test_output.py           # testes do subpacote output
+│   └── test_cli.py              # testes de integração da CLI
+├── pyproject.toml               # configuração do pacote e pytest
+├── requirements.txt             # dependências de produção (stdlib only)
+├── requirements-dev.txt         # dependências de desenvolvimento
 └── README.md
 ```
 
