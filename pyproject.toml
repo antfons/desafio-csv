@@ -1,0 +1,50 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "vendas-cli"
+version = "1.0.0"
+description = "CLI para processamento e análise de relatórios de vendas em CSV"
+readme = "README.md"
+license = { text = "MIT" }
+requires-python = ">=3.10"
+keywords = ["cli", "vendas", "csv", "relatório"]
+
+# Sem dependências externas: usa apenas stdlib
+dependencies = []
+
+[project.optional-dependencies]
+# Espelha requirements-dev.txt — mantenha os dois sincronizados
+dev = [
+    "pytest>=7.4",
+    "pytest-cov>=4.1",
+]
+
+[project.scripts]
+vendas-cli = "vendas_cli.cli:entrypoint"  # resolve via cli/__init__.py
+
+[tool.setuptools.packages.find]
+where = ["features"]
+include = ["vendas_cli*"]
+
+# Pytest
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["features"]
+addopts = [
+    "-v",
+    "--tb=short",
+    "--cov=vendas_cli",
+    "--cov-report=term-missing",
+    "--cov-fail-under=80",
+]
+
+# Coverage
+[tool.coverage.run]
+source = ["vendas_cli"]
+omit = ["tests/*"]
+
+[tool.coverage.report]
+show_missing = true
+skip_covered = false

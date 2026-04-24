@@ -1,0 +1,3 @@
+# Dependências de produção
+# Este projeto utiliza apenas a biblioteca padrão do Python (stdlib).
+# Nenhuma dependência externa é necessária para execução.
