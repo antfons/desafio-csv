@@ -56,7 +56,7 @@ Tênis,1,199.9,2025-02-18
 ### Instalar para uso direto
 
 ```bash
-git clone <repo-url>
+git clone https://github.com/antfons/desafio-csv
 cd vendas-cli
 
 pip install -r requirements.txt
@@ -66,7 +66,7 @@ pip install .
 ### Instalar em modo desenvolvimento
 
 ```bash
-git clone <repo-url>
+git clone https://github.com/antfons/desafio-csv
 cd vendas-cli
 
 pip install -r requirements-dev.txt
